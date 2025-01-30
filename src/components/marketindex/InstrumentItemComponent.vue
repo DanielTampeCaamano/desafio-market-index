@@ -1,6 +1,6 @@
-<!-- InstrumentPairComponent.vue -->
+<!-- InstrumentinstrumentsComponent.vue -->
 <template>
-  <template v-for="(instrument, idx) in pair" :key="instrument.codeInstrument">
+  <template v-for="(instrument, idx) in instruments" :key="instrument.codeInstrument">
     <!-- Celda Nombre -->
     <td
       @click="selectInstrument(instrument)"
@@ -38,7 +38,7 @@
     </td>
 
     <!-- Espaciador entre pares -->
-    <td v-if="idx === 0 && props.pair.length === 1" colspan="7"></td>
+    <td v-if="idx === 0 && props.instruments.length === 1" colspan="7"></td>
   </template>
 </template>
 
@@ -47,7 +47,7 @@ import { useInstrumentStore } from '@/stores/index'
 import type { IConstituent } from '@/types/constituents'
 
 const props = defineProps<{
-  pair: IConstituent[]
+  instruments: IConstituent[]
 }>()
 
 const store = useInstrumentStore()

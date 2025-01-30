@@ -25,7 +25,7 @@
       <tbody class="divide-y divide-gray-200">
         <!-- Agrupar instrumentos en pares -->
         <tr v-for="(pair, index) in instrumentPairs" :key="index" class="bg-gray-200">
-          <InstrumentItemComponent :pair="pair" />
+          <InstrumentItemComponent :instruments="pair" />
         </tr>
 
         <!-- Mensaje cuando no hay resultados -->
@@ -40,20 +40,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useInstrumentStore } from '@/stores/index'
 import InstrumentItemComponent from './InstrumentItemComponent.vue'
 
 const store = useInstrumentStore()
-
-const filteredInstruments = computed(() => {
-  if (!store.instruments) return []
-  return store.searchQuery
-    ? store.instruments.constituents.filter(instrument =>
-      instrument.name.toLowerCase().includes(store.searchQuery.toLowerCase())
-    )
-    : store.instruments.constituents
-})
+const filteredInstruments = ref(store.filteredInstruments);
 
 // Agrupar instrumentos en pares para dos columnas
 const instrumentPairs = computed(() => {

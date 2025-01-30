@@ -2,7 +2,7 @@ import type { IConstituent, IConstituentsData } from '@/types/constituents'
 import type { IHistoryChartData } from '@/types/history'
 import type { ISummaryData } from '@/types/summary'
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import instrumentsListData from '@/api/constituyentes/constituensList.json';
 
@@ -31,6 +31,17 @@ export const useInstrumentStore = defineStore('instrument', () => {
   const selectedIndex = ref<indexOption>('IPSA');
   const chartPeriod = ref<chartPeriodOption>('1M')
   const searchQuery = ref<string>('');
+
+  // Computado
+
+  const filteredInstruments = computed(() => {
+    if (!instruments.value) return []
+    return searchQuery.value
+      ? instruments.value.constituents.filter((instrument) =>
+          instrument.name.toLowerCase().includes(searchQuery.value.toLowerCase()),
+        )
+      : instruments.value.constituents
+  })
 
   // Acciones
 
@@ -156,6 +167,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
     selectedInstrument,
     selectedIndex,
     chartPeriod,
+    filteredInstruments,
     instruments,
     history,
     summary,
