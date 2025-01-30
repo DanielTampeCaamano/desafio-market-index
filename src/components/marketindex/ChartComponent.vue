@@ -28,7 +28,7 @@ onMounted(() => {
 })
 
 watch(
-  () => [store.selectedInstrument, store.chartPeriod],
+  () => [store.selectedIndex, store.chartPeriod],
   () => {
     updateChart()
     chartPeriod.value = store.chartPeriod;

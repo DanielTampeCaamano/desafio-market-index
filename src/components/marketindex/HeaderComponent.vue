@@ -2,7 +2,7 @@
   <div class="bg-white p-6 rounded-lg shadow">
     <div class="flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-bold">{{ indexName }}</h1>
+        <h1 class="text-2xl font-bold">IPSA, {{ indexName }}</h1>
         <div class="flex items-center gap-4 mt-2">
           <span class="text-3xl font-semibold">{{ formattedPrice }}</span>
           <span :class="changeClass">{{ formattedChange }}</span>

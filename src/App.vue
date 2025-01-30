@@ -12,7 +12,7 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div class="h-full bg-gray-100 dark:bg-gray-700">
+  <div class="h-full bg-gray-200 ">
     <RouterView />
   </div>
 </template>

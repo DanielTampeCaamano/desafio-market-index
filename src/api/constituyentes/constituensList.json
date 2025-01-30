@@ -312,6 +312,21 @@
         "tend": "down",
         "performanceAbsolute": -6.850000000000023,
         "performanceRelative": -0.971824
+      },{
+        "codeInstrument": "IPSA",
+        "name": "IPSA",
+        "shortName": "IPSA",
+        "pctDay": -0.784947,
+        "pct30D": 0.5394469626186282,
+        "pctCY": 5.285933488980699,
+        "pct1Y": 16.098189329552003,
+        "lastPrice": 6510.08,
+        "datetimeLastPrice": "06-11-2024 12:52:07",
+        "volumeMoney": 0,
+        "accumulatedVolumeMoney": 0,
+        "tend": "down",
+        "performanceAbsolute": -15.3,
+        "performanceRelative": -0.234469
       },
       {
         "codeInstrument": "ITAUCL",

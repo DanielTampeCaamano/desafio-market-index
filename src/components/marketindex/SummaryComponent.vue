@@ -6,7 +6,7 @@
         <span class="value">{{ selectedInstrument.price.datetimeLastPrice }}</span>
       </div>
     </div>
-    <div>
+    <div class="border-t border-gray-300">
       <div class="summary-item flex justify-between">
         <span class="label">Nombre de Mercado: </span>
         <span class="value">{{ selectedInstrument.info.marketName }}</span>
@@ -37,6 +37,12 @@
       </div>
     </div>
     <div>
+      <div class="summary-item flex justify-between">
+        <span class="label">Variación: </span>
+        <span class="value">%</span>
+      </div>
+    </div>
+    <div class="border-t border-gray-300">
       <div class="summary-item flex justify-between">
         <span class="label">Porcentaje de Variación 1 Mes: </span>
         <span class="value" :class="selectedInstrument.price.pct30D > 0 ? 'text-green-600'
@@ -73,4 +79,3 @@ watch(
 )
 
 </script>
-

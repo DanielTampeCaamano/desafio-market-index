@@ -1,33 +1,64 @@
+<!-- InstrumentPairComponent.vue -->
 <template>
-  <div @click="selectInstrument"
-    class="p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-    <div class="flex justify-between items-center">
-      <h3 class="font-semibold">{{ instrument.name }}</h3>
-      <span :class="changeColor">{{ formattedChange }}</span>
-    </div>
-    <div class="flex justify-between mt-2">
-      <span class="text-gray-600">Price</span>
-      <span class="font-medium">{{ formattedPrice }}</span>
-    </div>
-  </div>
+  <template v-for="(instrument, idx) in pair" :key="instrument.codeInstrument">
+    <!-- Celda Nombre -->
+    <td
+      @click="selectInstrument(instrument)"
+      class="px-4 py-2 font-medium text-gray-900 cursor-pointer hover:bg-blue-300"
+      :class="{ 'bg-blue-200': instrument.codeInstrument === store.selectedInstrument?.codeInstrument }"
+    >
+      {{ instrument.shortName }}
+    </td>
+
+    <!-- Celda Último -->
+    <td class="px-4 py-2 text-gray-700">
+      {{ instrument.lastPrice.toFixed(2) }}
+    </td>
+
+    <!-- Celda Monto -->
+    <td class="px-4 py-2 text-gray-700">
+      {{ instrument.volumeMoney.toLocaleString() }}
+    </td>
+
+    <!-- Variaciones con colores condicionales -->
+    <td :class="variationColor(instrument.pctDay)" class="px-4 py-2">
+      {{ formatVariation(instrument.pctDay) }}
+    </td>
+
+    <td :class="variationColor(instrument.pct30D)" class="px-4 py-2">
+      {{ formatVariation(instrument.pct30D) }}
+    </td>
+
+    <td :class="variationColor(instrument.pctCY)" class="px-4 py-2">
+      {{ formatVariation(instrument.pctCY) }}
+    </td>
+
+    <td :class="variationColor(instrument.pct1Y)" class="px-4 py-2">
+      {{ formatVariation(instrument.pct1Y) }}
+    </td>
+
+    <!-- Espaciador entre pares -->
+    <td v-if="idx === 0 && props.pair.length === 1" colspan="7"></td>
+  </template>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useInstrumentStore } from '@/stores/index'
-import type { IConstituent } from '@/types/constituents';
+import type { IConstituent } from '@/types/constituents'
 
 const props = defineProps<{
-  instrument: IConstituent;
+  pair: IConstituent[]
 }>()
 
 const store = useInstrumentStore()
 
-const formattedPrice = computed(() => `$${props.instrument.lastPrice.toFixed(2)}`)
-const formattedChange = computed(() => `${props.instrument.pctDay > 0 ? '+' : ''}${props.instrument.pctDay.toFixed(2)}%`)
-const changeColor = computed(() => props.instrument.pctDay >= 0 ? 'text-green-600' : 'text-red-600')
+const formatVariation = (value: number) =>
+  `${value > 0 ? '+' : ''}${value.toFixed(2)}%`
 
-const selectInstrument = () => {
-  store.selectInstrument(props.instrument)
+const variationColor = (value: number) =>
+  value >= 0 ? 'text-green-600' : 'text-red-600'
+
+const selectInstrument = (instrument: IConstituent) => {
+  store.selectInstrument(instrument)
 }
 </script>

@@ -2,7 +2,7 @@ import type { IConstituent, IConstituentsData } from '@/types/constituents'
 import type { IHistoryChartData } from '@/types/history'
 import type { ISummaryData } from '@/types/summary'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import instrumentsListData from '@/api/constituyentes/constituensList.json';
 
@@ -34,10 +34,20 @@ export const useInstrumentStore = defineStore('instrument', () => {
 
   // Acciones
 
-  async function fetchInstruments() {
+  function fetchInstruments() {
     try {
       const response = instrumentsListData;
-      instruments.value = response.data as IConstituentsData
+      instruments.value = response.data as IConstituentsData;
+      if (instruments.value.constituents.length > 0) {
+        const instrument= instruments.value.constituents.find((value) => {
+          if (value.codeInstrument == selectedIndex.value) {
+            return value;
+          }
+        })
+        if (instrument!=null) {
+          selectedInstrument.value = instrument;
+        }
+      }
       fetchInstrumentHistory(selectedIndex.value);
       fetchInstrumentSummary(selectedIndex.value);
     } catch (error) {
@@ -45,7 +55,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
     }
   }
 
-  async function fetchInstrumentHistory(codeInstrument: string) {
+  function fetchInstrumentHistory(codeInstrument: string) {
     let chartData;
     switch (codeInstrument) {
       case 'AGUAS-A':
@@ -72,13 +82,13 @@ export const useInstrumentStore = defineStore('instrument', () => {
      }
     try {
       const response = chartData;
-      history.value = response.data as IHistoryChartData
+      history.value = response.data as IHistoryChartData;
     } catch (error) {
       console.error('Error fetching chart data: ', error);
     }
   }
 
-  async function fetchInstrumentSummary(codeInstrument: string) {
+  function fetchInstrumentSummary(codeInstrument: string) {
     let summaryData
     switch (codeInstrument) {
       case 'AGUAS-A':
@@ -105,7 +115,7 @@ export const useInstrumentStore = defineStore('instrument', () => {
     }
     try {
       const response = summaryData;
-      summary.value = response.data as ISummaryData
+      summary.value = response.data as ISummaryData;
     } catch (error) {
       console.error('Error fetching summary data: ', error)
     }
@@ -127,8 +137,18 @@ export const useInstrumentStore = defineStore('instrument', () => {
   }
 
   function setPeriod(period: chartPeriodOption) {
-    chartPeriod.value = period
+    chartPeriod.value = period;
   }
+
+  watch(
+    () => selectedIndex.value,
+    (newIndex) => {
+
+      fetchInstrumentHistory(newIndex);
+      fetchInstrumentSummary(newIndex);
+    }
+  );
+
 
   return {
     fetchInstruments,
