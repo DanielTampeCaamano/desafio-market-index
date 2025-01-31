@@ -22,7 +22,7 @@ export interface IConstituent {
   performanceRelative: number;
 }
 
-export interface IConstituentsData{
+export interface IConstituentsData {
   info: IConstituentsInfo;
   constituents: IConstituent[];
 }

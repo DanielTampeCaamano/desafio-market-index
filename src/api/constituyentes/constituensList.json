@@ -312,7 +312,8 @@
         "tend": "down",
         "performanceAbsolute": -6.850000000000023,
         "performanceRelative": -0.971824
-      },{
+      },
+      {
         "codeInstrument": "IPSA",
         "name": "IPSA",
         "shortName": "IPSA",
