@@ -1,26 +1,37 @@
 <template>
-  <div class="flex gap-2">
-    <button v-for="index in indexList" :key="index.key" @click="selectInstrument(index.name)" class="px-4 py-2 rounded"
-      :class="index.name === tabIndexSelected
-        ? 'bg-blue-500 text-white'
-        : 'bg-gray-100 hover:bg-gray-200'">
+  <div class="flex flex-wrap gap-2 overflow-x-auto px-2 py-1 md:overflow-visible">
+    <button
+      v-for="index in indexList"
+      :key="index.key"
+      @click="selectInstrument(index.name)"
+      class="min-w-[100px] px-3 py-1.5 text-sm
+             md:min-w-[120px] md:px-4 md:py-2 md:text-base
+             transition-all rounded"
+      :class="
+        index.name === tabIndexSelected
+          ? 'bg-blue-500 text-white hover:bg-blue-600'
+          : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+      "
+    >
       {{ index.name }}
     </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useInstrumentStore, type indexOption } from '@/stores/index'
+import { useInstrumentStore, type indexOption } from '@/stores/index';
 import type { IConstituent } from '@/types/constituents';
 import { onBeforeMount, ref, watch } from 'vue';
-const store = useInstrumentStore()
+const store = useInstrumentStore();
 const tabIndexSelected = ref(store.selectedIndex);
-const indexList = [{ name: 'AGUAS-A', key: 0 },
-{ name: 'ANDINA-B', key: 1 },
-{ name: 'BCI', key: 2 },
-{ name: 'BSANTANDER', key: 3 },
-{ name: 'CAP', key: 4 },
-{ name: 'IPSA', key: 5 },];
+const indexList = [
+  { name: 'AGUAS-A', key: 0 },
+  { name: 'ANDINA-B', key: 1 },
+  { name: 'BCI', key: 2 },
+  { name: 'BSANTANDER', key: 3 },
+  { name: 'CAP', key: 4 },
+  { name: 'IPSA', key: 5 },
+];
 const tabInstruments = ref<IConstituent[]>([]);
 
 const loadTabInstruments = () => {
@@ -41,27 +52,24 @@ const loadTabInstruments = () => {
   }
 };
 
-const selectInstrument = (name: string) =>{
+const selectInstrument = (name: string) => {
   store.setIndex(name as indexOption);
   loadTabInstruments();
-  const selectedInstrument = tabInstruments.value.find(
-    (value) => value.codeInstrument === name
-  );
+  const selectedInstrument = tabInstruments.value.find((value) => value.codeInstrument === name);
 
   if (selectedInstrument) {
     store.selectInstrument(selectedInstrument);
   } else {
     console.warn(`No se encontró el instrumento con código ${name}.`);
   }
-}
-
+};
 
 watch(
   () => store.selectedIndex,
   (newIndex) => {
     tabIndexSelected.value = newIndex;
     loadTabInstruments();
-  }
+  },
 );
 
 onBeforeMount(() => {
@@ -71,6 +79,5 @@ onBeforeMount(() => {
   } else {
     console.warn('No hay índice seleccionado.');
   }
-})
-
+});
 </script>

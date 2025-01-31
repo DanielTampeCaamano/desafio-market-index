@@ -1,10 +1,13 @@
 <!-- InstrumentListComponent.vue -->
 <template>
-  <div class="overflow-x-auto rounded-lg shadow-lg border border-gray-200">
+  <div class="instrument-list overflow-x-auto rounded-lg shadow-lg border border-gray-200">
     <table class="min-w-full divide-y divide-gray-200 text-xs">
       <thead class="bg-gray-50">
         <tr>
-          <th colspan="14" class="px-4 py-3 text-left font-medium text-gray-700 uppercase bg-gray-100">
+          <th
+            colspan="14"
+            class="px-4 py-3 text-left font-medium text-gray-700 uppercase bg-gray-100"
+          >
             IPSA
           </th>
         </tr>
@@ -40,19 +43,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useInstrumentStore } from '@/stores/index'
-import InstrumentItemComponent from './InstrumentItemComponent.vue'
+import { computed, ref } from 'vue';
+import { useInstrumentStore } from '@/stores/index';
+import InstrumentItemComponent from './InstrumentItemComponent.vue';
 
-const store = useInstrumentStore()
+const store = useInstrumentStore();
 const filteredInstruments = ref(store.filteredInstruments);
 
 // Agrupar instrumentos en pares para dos columnas
 const instrumentPairs = computed(() => {
-  const pairs = []
+  const pairs = [];
   for (let i = 0; i < filteredInstruments.value.length; i += 2) {
-    pairs.push(filteredInstruments.value.slice(i, i + 2))
+    pairs.push(filteredInstruments.value.slice(i, i + 2));
   }
-  return pairs
-})
+  return pairs;
+});
 </script>

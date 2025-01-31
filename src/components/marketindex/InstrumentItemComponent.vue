@@ -5,7 +5,9 @@
     <td
       @click="selectInstrument(instrument)"
       class="px-4 py-2 font-medium text-gray-900 cursor-pointer hover:bg-blue-300"
-      :class="{ 'bg-blue-200': instrument.codeInstrument === store.selectedInstrument?.codeInstrument }"
+      :class="{
+        'bg-blue-200': instrument.codeInstrument === store.selectedInstrument?.codeInstrument,
+      }"
     >
       {{ instrument.shortName }}
     </td>
@@ -43,22 +45,20 @@
 </template>
 
 <script setup lang="ts">
-import { useInstrumentStore } from '@/stores/index'
-import type { IConstituent } from '@/types/constituents'
+import { useInstrumentStore } from '@/stores/index';
+import type { IConstituent } from '@/types/constituents';
 
 const props = defineProps<{
-  instruments: IConstituent[]
-}>()
+  instruments: IConstituent[];
+}>();
 
-const store = useInstrumentStore()
+const store = useInstrumentStore();
 
-const formatVariation = (value: number) =>
-  `${value > 0 ? '+' : ''}${value.toFixed(2)}%`
+const formatVariation = (value: number) => `${value > 0 ? '+' : ''}${value.toFixed(2)}%`;
 
-const variationColor = (value: number) =>
-  value >= 0 ? 'text-green-600' : 'text-red-600'
+const variationColor = (value: number) => (value >= 0 ? 'text-green-600' : 'text-red-600');
 
 const selectInstrument = (instrument: IConstituent) => {
-  store.selectInstrument(instrument)
-}
+  store.selectInstrument(instrument);
+};
 </script>

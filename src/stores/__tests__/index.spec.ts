@@ -1,15 +1,15 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { setActivePinia, createPinia } from 'pinia'
-import { useInstrumentStore } from '@/stores/index'
-import type { IConstituent } from '@/types/constituents'
+import { describe, it, expect, beforeEach } from 'vitest';
+import { setActivePinia, createPinia } from 'pinia';
+import { useInstrumentStore } from '@/stores/index';
+import type { IConstituent } from '@/types/constituents';
 
 describe('Instrument Store', () => {
   beforeEach(() => {
-    setActivePinia(createPinia())
-  })
+    setActivePinia(createPinia());
+  });
 
   it('selecciona instrumento correctamente', () => {
-    const store = useInstrumentStore()
+    const store = useInstrumentStore();
     const mockInstrument: IConstituent = {
       codeInstrument: 'TEST',
       name: 'Test Instrument',
@@ -24,27 +24,28 @@ describe('Instrument Store', () => {
       accumulatedVolumeMoney: 0,
       tend: 'same',
       performanceAbsolute: 0,
-      performanceRelative: 0
-    }
+      performanceRelative: 0,
+    };
 
-    store.selectInstrument(mockInstrument)
+    store.selectInstrument(mockInstrument);
 
-    expect(store.selectedInstrument).toEqual(mockInstrument)
-    expect(store.selectedIndex).toBe('TEST')
-  })
+    expect(store.selectedInstrument).toEqual(mockInstrument);
+    expect(store.selectedIndex).toBe('TEST');
+  });
 
   it('filtra instrumentos según query de búsqueda', async () => {
-    const store = useInstrumentStore()
+    const store = useInstrumentStore();
     store.instruments = {
       info: {
         name: '',
         shortName: '',
         countryName: '',
-        codeInstrument: ''
+        codeInstrument: '',
       },
       constituents: [
         {
-          codeInstrument: 'TEST1', name: 'Apple Inc',
+          codeInstrument: 'TEST1',
+          name: 'Apple Inc',
           shortName: '',
           pctDay: 0,
           pct30D: 0,
@@ -56,10 +57,11 @@ describe('Instrument Store', () => {
           accumulatedVolumeMoney: 0,
           tend: 'same',
           performanceAbsolute: 0,
-          performanceRelative: 0
+          performanceRelative: 0,
         },
         {
-          codeInstrument: 'TEST2', name: 'Microsoft Corp',
+          codeInstrument: 'TEST2',
+          name: 'Microsoft Corp',
           shortName: '',
           pctDay: 0,
           pct30D: 0,
@@ -71,14 +73,14 @@ describe('Instrument Store', () => {
           accumulatedVolumeMoney: 0,
           tend: 'same',
           performanceAbsolute: 0,
-          performanceRelative: 0
+          performanceRelative: 0,
         },
       ],
-    }
+    };
 
-    store.setSearchQuery('apple')
+    store.setSearchQuery('apple');
 
-    expect(store.filteredInstruments).toHaveLength(1)
-    expect(store.filteredInstruments[0].codeInstrument).toBe('TEST1')
-  })
-})
+    expect(store.filteredInstruments).toHaveLength(1);
+    expect(store.filteredInstruments[0].codeInstrument).toBe('TEST1');
+  });
+});
